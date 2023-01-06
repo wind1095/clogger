@@ -8,8 +8,8 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-var myConsoleLogger *zap.Logger
-var myFileLogger *zap.Logger
+//var myConsoleLogger *zap.SugaredLogger
+var myFileLogger *zap.SugaredLogger
 
 func Init(logpath string, appname string, logday time.Duration) {
 
@@ -42,7 +42,9 @@ func Init(logpath string, appname string, logday time.Duration) {
 		zapcore.AddSync(rotator),
 		zap.InfoLevel)
 
-	myFileLogger = zap.New(logCore)
+	//myFileLogger = zap.New(logCore)
+	log := zap.New(logCore)
+	myFileLogger = log.Sugar()
 
 	//콘솔 로거 정의
 	config := zap.NewProductionConfig()
@@ -52,38 +54,27 @@ func Init(logpath string, appname string, logday time.Duration) {
 	encoderConfig.StacktraceKey = ""
 	config.EncoderConfig = encoderConfig
 
-	myConsoleLogger, err = config.Build(zap.AddCallerSkip(1))
-	if err != nil {
-		panic(err)
-	}
+//	myConsoleLogger, err = config.Build(zap.AddCallerSkip(1))
+//	if err != nil {
+//		panic(err)
+//	}
+}
+func Info(template string, args ...interface{}) {
+	myFileLogger.Infof(template, args...)
 }
 
-func Info(message string, fields ...zap.Field) {
-	myConsoleLogger.Info(message, fields...)
-	myFileLogger.Info(message, fields...)
+func Debug(template string, args ...interface{}) {
+	myFileLogger.Debugf(template, args...)
 }
 
-func Debug(message string, fields ...zap.Field) {
-	myConsoleLogger.Debug(message, fields...)
-	myFileLogger.Debug(message, fields...)
+func Warn(template string, args ...interface{}) {
+	myFileLogger.Warnf(template, args...)
 }
 
-func Warn(message string, fields ...zap.Field) {
-	myConsoleLogger.Warn(message, fields...)
-	myFileLogger.Warn(message, fields...)
+func Panic(template string, args ...interface{}) {
+	myFileLogger.Panicf(template, args...)
 }
 
-func Panic(message string, fields ...zap.Field) {
-	myConsoleLogger.Panic(message, fields...)
-	myFileLogger.Panic(message, fields...)
-}
-
-func Error(message string, fields ...zap.Field) {
-	myConsoleLogger.Error(message, fields...)
-	myFileLogger.Error(message, fields...)
-}
-
-func Fatal(message string, fields ...zap.Field) {
-	myConsoleLogger.Fatal(message, fields...)
-	myFileLogger.Fatal(message, fields...)
+func Error(template string, args ...interface{}) {
+	myFileLogger.Errorf(template, args...)
 }

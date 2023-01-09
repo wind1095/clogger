@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-//var myConsoleLogger *zap.SugaredLogger
+var myConsoleLogger *zap.SugaredLogger
 var myFileLogger *zap.SugaredLogger
 
 func Init(logpath string, appname string, logday time.Duration) {
@@ -54,27 +54,35 @@ func Init(logpath string, appname string, logday time.Duration) {
 	encoderConfig.StacktraceKey = ""
 	config.EncoderConfig = encoderConfig
 
-//	myConsoleLogger, err = config.Build(zap.AddCallerSkip(1))
-//	if err != nil {
-//		panic(err)
-//	}
+	log2, err := config.Build(zap.AddCallerSkip(1))
+	if err != nil {
+		panic(err)
+	}
+
+	myConsoleLogger = log2.Sugar()
+			
 }
 func Info(template string, args ...interface{}) {
+	myConsoleLogger.Infof(template, args...)
 	myFileLogger.Infof(template, args...)
 }
 
 func Debug(template string, args ...interface{}) {
+	myConsoleLogger.Debugf(template, args...)
 	myFileLogger.Debugf(template, args...)
 }
 
 func Warn(template string, args ...interface{}) {
+	myConsoleLogger.Warnf(template, args...)
 	myFileLogger.Warnf(template, args...)
 }
 
 func Panic(template string, args ...interface{}) {
+	myConsoleLogger.Panicf(template, args...)
 	myFileLogger.Panicf(template, args...)
 }
 
 func Error(template string, args ...interface{}) {
+	myConsoleLogger.Errorf(template, args...)
 	myFileLogger.Errorf(template, args...)
 }

@@ -89,27 +89,27 @@ func Error(template string, args ...interface{}) {
 	myFileLogger.Errorf(template, args...)
 }
 
-func Infoln(template string, args ...interface{}) {
+func Infoln(args ...interface{}) {
 	myConsoleLogger.Infoln(template, args...)
 	myFileLogger.Infoln(template, args...)
 }
 
-func Debugln(template string, args ...interface{}) {
+func Debugln(args ...interface{}) {
 	myConsoleLogger.Debugln(template, args...)
 	myFileLogger.Debugln(template, args...)
 }
 
-func Warnln(template string, args ...interface{}) {
+func Warnln(args ...interface{}) {
 	myConsoleLogger.Warnln(template, args...)
 	myFileLogger.Warnf(template, args...)
 }
 
-func Panicln(template string, args ...interface{}) {
+func Panicln(args ...interface{}) {
 	myConsoleLogger.Panicln(template, args...)
 	myFileLogger.Panicln(template, args...)
 }
 
-func Errorln(template string, args ...interface{}) {
+func Errorln(args ...interface{}) {
 	myConsoleLogger.Errorln(template, args...)
 	myFileLogger.Errorln(template, args...)
 }

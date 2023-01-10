@@ -90,27 +90,27 @@ func Error(template string, args ...interface{}) {
 }
 
 func Infoln(args ...interface{}) {
-	myConsoleLogger.Infoln(template, args...)
-	myFileLogger.Infoln(template, args...)
+	myConsoleLogger.Infoln(args...)
+	myFileLogger.Infoln(args...)
 }
 
 func Debugln(args ...interface{}) {
-	myConsoleLogger.Debugln(template, args...)
-	myFileLogger.Debugln(template, args...)
+	myConsoleLogger.Debugln(args...)
+	myFileLogger.Debugln(args...)
 }
 
 func Warnln(args ...interface{}) {
-	myConsoleLogger.Warnln(template, args...)
-	myFileLogger.Warnf(template, args...)
+	myConsoleLogger.Warnln(args...)
+	myFileLogger.Warnf(args...)
 }
 
 func Panicln(args ...interface{}) {
-	myConsoleLogger.Panicln(template, args...)
-	myFileLogger.Panicln(template, args...)
+	myConsoleLogger.Panicln(args...)
+	myFileLogger.Panicln(args...)
 }
 
 func Errorln(args ...interface{}) {
-	myConsoleLogger.Errorln(template, args...)
-	myFileLogger.Errorln(template, args...)
+	myConsoleLogger.Errorln(args...)
+	myFileLogger.Errorln(args...)
 }
 

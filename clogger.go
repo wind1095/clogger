@@ -33,8 +33,9 @@ func Init(logpath string, appname string, logday time.Duration) {
 		TimeKey:        "timestamp",
 		CallerKey:      "caller",
 		EncodeLevel:    zapcore.LowercaseLevelEncoder,
-		EncodeTime:     zapcore.ISO8601TimeEncoder,
+		EncodeTime:     zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000000"),
 		EncodeDuration: zapcore.StringDurationEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
 	}
 
 	logCore := zapcore.NewCore(
@@ -42,15 +43,16 @@ func Init(logpath string, appname string, logday time.Duration) {
 		zapcore.AddSync(rotator),
 		zap.InfoLevel)
 
-	//myFileLogger = zap.New(logCore)
+//	myFileLogger = zap.New(logCore)
 	log := zap.New(logCore)
 	myFileLogger = log.Sugar()
+	myFileLogger = myFileLogger.WithOptions(zap.AddCaller(), zap.AddCallerSkip(1))
 
 	//콘솔 로거 정의
 	config := zap.NewProductionConfig()
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.TimeKey = "timestamp"
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	encoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000000")
 	encoderConfig.StacktraceKey = ""
 	config.EncoderConfig = encoderConfig
 
@@ -86,3 +88,4 @@ func Error(template string, args ...interface{}) {
 	myConsoleLogger.Errorf(template, args...)
 	myFileLogger.Errorf(template, args...)
 }
+

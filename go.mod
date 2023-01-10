@@ -1,3 +1,3 @@
-module github.com/wind1095/clogger
+module clogger
 
 go 1.17

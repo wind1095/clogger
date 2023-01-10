@@ -101,7 +101,7 @@ func Debugln(args ...interface{}) {
 
 func Warnln(args ...interface{}) {
 	myConsoleLogger.Warnln(args...)
-	myFileLogger.Warnf(args...)
+	myFileLogger.Warnln(args...)
 }
 
 func Panicln(args ...interface{}) {
